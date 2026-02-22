@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import ExpensesGraph from "./ExpensesGraph";
 import "./Dashboard.css";
 import { API_BASE } from "../config";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("Other");
@@ -122,14 +124,24 @@ const Dashboard = () => {
     document.body.removeChild(link);
   };
 
+  const handleLogout = () => {
+    // In a real app, clear tokens or state here
+    navigate("/");
+  };
+
   return (
     <div className="dashboard-container">
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <h2>My Expenses 💸</h2>
-        <button onClick={exportToCSV} className="btn" style={{ padding: '0.5rem 1rem', background: '#10b981', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
-          📥 Export to CSV
-        </button>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button onClick={exportToCSV} className="btn" style={{ padding: '0.5rem 1rem', background: '#10b981', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
+            📥 Export to CSV
+          </button>
+          <button onClick={handleLogout} className="btn" style={{ padding: '0.5rem 1rem', background: '#ef4444', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
+            🚪 Logout
+          </button>
+        </div>
       </div>
 
       {/* Add Expense Form */}

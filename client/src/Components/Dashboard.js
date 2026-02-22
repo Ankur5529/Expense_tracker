@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ExpensesGraph from "./ExpensesGraph";
 import "./Dashboard.css";
+import { API_BASE } from "../config";
 
 const Dashboard = () => {
   const [title, setTitle] = useState("");
@@ -24,7 +25,7 @@ const Dashboard = () => {
 
   const fetchExpenses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/expenses");
+      const res = await axios.get(`${API_BASE}/api/expenses`);
       setExpenses(res.data);
       setLoading(false);
     } catch (err) {
@@ -47,10 +48,10 @@ const Dashboard = () => {
 
     try {
       if (editId) {
-        await axios.put(`http://localhost:5000/api/expenses/${editId}`, expenseData);
+        await axios.put(`${API_BASE}/api/expenses/${editId}`, expenseData);
         setEditId(null);
       } else {
-        await axios.post("http://localhost:5000/api/expenses", expenseData);
+        await axios.post(`${API_BASE}/api/expenses`, expenseData);
       }
       fetchExpenses(); // Refresh list
       setTitle("");
@@ -74,7 +75,7 @@ const Dashboard = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/expenses/${id}`);
+      await axios.delete(`${API_BASE}/api/expenses/${id}`);
       setExpenses(expenses.filter((exp) => exp._id !== id));
     } catch (error) {
       console.error("Error deleting expense:", error);

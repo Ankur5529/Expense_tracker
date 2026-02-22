@@ -32,8 +32,8 @@ export default function Landing() {
             </p>
 
             <div className="hero-buttons">
-              <button className="btn filled">Get Started</button>
-              <button className="btn outline">Learn More</button>
+              <button className="btn filled" onClick={() => setShowSignup(true)}>Get Started</button>
+              <button className="btn outline" onClick={() => setShowLogin(true)}>Login</button>
             </div>
           </div>
 
